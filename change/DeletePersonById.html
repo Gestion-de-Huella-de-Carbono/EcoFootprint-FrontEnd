@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Persona por ID - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/change_styles/DeletePersonById.css">
+</head>
+<body>
+    <header>
+        <h1>Eliminar Persona por ID - EcoFootprint</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Eliminar Persona por ID</h2>
+            <form id="eliminar_persona_form">
+                <div class="form-group">
+                    <label for="id_persona">Ingrese el ID de la persona a eliminar:</label>
+                    <input type="number" id="id_persona" name="id_persona" required>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="buscar_btn">Buscar Persona</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="resultados" style="display: none;">
+            <h2>Persona a Eliminar</h2>
+            <table id="persona_eliminar_table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Ciudad</th>
+                        <th>Huella de carbono</th>
+                    </tr>
+                </thead>
+                <tbody id="persona_eliminar_body">
+                    <!-- Aquí se añadirá el contenido que viene del JavaScript -->
+                </tbody>
+            </table>
+            <div class="button-container">
+                <button type="button" id="eliminar_persona_btn">Eliminar Persona</button>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="../list/List.html">Atras</a>
+        <a href="../Index.html">Inicio</a>
+    </nav>
+
+    <script>
+        document.getElementById('buscar_btn').addEventListener('click', function() {
+            var idPersona = document.getElementById('id_persona').value;
+            buscarPersonaPorId(idPersona);
+        });
+
+        document.getElementById('eliminar_persona_btn').addEventListener('click', function() {
+            var idPersona = document.getElementById('id_persona').value;
+            eliminarPersonaPorId(idPersona);
+        });
+
+        function buscarPersonaPorId(idPersona) {
+            // Aquí simularíamos una llamada al servidor para obtener los datos de la persona por su ID
+            var persona = {
+                id: 1,
+                nombre: 'Juan',
+                apellido: 'Pérez',
+                edad: 30,
+                ciudad: 'Buenos Aires',
+                huellaCarbono: 'Media'
+            };
+
+            // Mostrar los resultados en la tabla
+            mostrarPersonaEliminar(persona);
+        }
+
+        function mostrarPersonaEliminar(persona) {
+            var resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.style.display = 'block';
+
+            var tablaBody = document.getElementById('persona_eliminar_body');
+            tablaBody.innerHTML = '';
+
+            var row = `<tr>
+                <td>${persona.id}</td>
+                <td>${persona.nombre}</td>
+                <td>${persona.apellido}</td>
+                <td>${persona.edad}</td>
+                <td>${persona.ciudad}</td>
+                <td>${persona.huellaCarbono}</td>
+            </tr>`;
+
+            tablaBody.innerHTML = row;
+        }
+
+        function eliminarPersonaPorId(idPersona) {
+            // Aquí simularíamos una llamada al servidor para eliminar la persona por su ID
+            alert(`Persona con ID ${idPersona} eliminada exitosamente.`);
+            // Aquí podrías redirigir a otra página o realizar otra acción después de eliminar
+        }
+    </script>
+
+</body>
+</html>
