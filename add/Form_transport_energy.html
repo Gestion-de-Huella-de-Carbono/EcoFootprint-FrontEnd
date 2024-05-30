@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Transporte y Energía - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/add_styles/Forms.css">
+</head>
+<body>
+<h1>Formulario de Transporte y Energía - EcoFootprint</h1>
+
+<div class="container">
+    <div class="form-section left">
+        <h2>Transporte</h2>
+        <form id="transporte_form">
+            <div class="form-group">
+                <label for="km_mensuales">¿Cuántos kilómetros conduces tu automóvil (o transporte público) en un mes?</label>
+                <input type="number" id="km_mensuales" name="km_mensuales">
+            </div>
+            <div class="form-group">
+                <label for="viajes_nacionales">Número de viajes en avión al mes (nacionales)</label>
+                <input type="number" id="viajes_nacionales" name="viajes_nacionales">
+            </div>
+            <div class="form-group">
+                <label for="viajes_internacionales">Número de viajes en avión al mes (internacionales)</label>
+                <input type="number" id="viajes_internacionales" name="viajes_internacionales">
+            </div>
+        </form>
+    </div>
+
+    <div class="form-section right">
+        <h2>Energía</h2>
+        <form id="energia_form">
+            <div class="form-group">
+                <label for="consumo_electricidad">Consumo de electricidad mensual (en kWh)</label>
+                <input type="number" id="consumo_electricidad" name="consumo_electricidad">
+            </div>
+            <div class="form-group">
+                <label for="consumo_gas">Consumo de gas natural mensual (en m³)</label>
+                <input type="number" id="consumo_gas" name="consumo_gas">
+            </div>
+        </form>
+    </div>
+
+    <div class="button-container">
+        <button type="button" id="siguiente_btn">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('siguiente_btn').addEventListener('click', function() {
+        // Guardar los datos en localStorage
+        const transporte = {
+            km_mensuales: document.getElementById('km_mensuales').value,
+            viajes_nacionales: document.getElementById('viajes_nacionales').value,
+            viajes_internacionales: document.getElementById('viajes_internacionales').value
+        };
+        const energia = {
+            consumo_electricidad: document.getElementById('consumo_electricidad').value,
+            consumo_gas: document.getElementById('consumo_gas').value
+        };
+
+        localStorage.setItem('transporte', JSON.stringify(transporte));
+        localStorage.setItem('energia', JSON.stringify(energia));
+
+        // Redirigir a la página de alimentación y otros
+        window.location.href = 'Form_food_others.html';
+    });
+</script>
+</body>
+</html>

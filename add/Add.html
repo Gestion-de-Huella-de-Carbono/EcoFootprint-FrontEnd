@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Persona - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/add_styles/Add.css">
+</head>
+<body>
+<h1>Agregar Persona - EcoFootprint</h1>
+
+<div class="container">
+    <div class="form-section">
+        <h2>Datos Personales</h2>
+        <form id="persona_form">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+            </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="button-container">
+    <button type="button" id="agregar_persona_btn">Agregar Huella de Carbono</button>
+</div>
+
+<script>
+    document.getElementById('agregar_persona_btn').addEventListener('click', function() {
+        // Enviar el formulario
+        document.getElementById('persona_form').submit();
+
+        // Redirigir al formulario de transporte y energía
+        window.location.href = 'Form_transport_energy.html';
+    });
+</script>
+
+</body>
+</html>
