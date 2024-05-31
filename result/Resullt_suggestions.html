@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados y Sugerencias - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/result_styles/Resullt_suggestions.css">
+</head>
+<body>
+    <h1>Resultados de la Huella de Carbono y Sugerencias - EcoFootprint</h1>
+
+    <div class="container">
+        <h2>Resultados</h2>
+        <p id="resultado_transporte"></p>
+        <p id="resultado_energia"></p>
+        <p id="resultado_alimentacion"></p>
+        <p id="resultado_otros"></p>
+        <p id="resultado_total"></p>
+
+        <h2>Sugerencias</h2>
+        <ul id="listaSugerencias"></ul>
+    </div>
+
+    <nav>
+        <a href="../Index.html">Regresar a la Pestaña de Inicio</a>
+    </nav>
+
+    <script>
+        // Factores de emisión
+        const factores = {
+            transporte: {
+                auto: 0.248,
+                avion_nacional: 1.040,
+                avion_internacional: 3.480
+            },
+            energia: {
+                electricidad: 0.274,
+                gas: 1.88
+            },
+            alimentacion: {
+                carne_roja: 15.4,
+                pollo: 3.8,
+                pescado: 6.1,
+                leche: 1.9,
+                queso: 2.5,
+                huevo: 0.12
+            },
+            otros: {
+                papel: 0.01
+            }
+        };
+
+        // Obtener datos del localStorage
+        const transporte = JSON.parse(localStorage.getItem('transporte'));
+        const energia = JSON.parse(localStorage.getItem('energia'));
+        const alimentacion = JSON.parse(localStorage.getItem('alimentacion'));
+        const otros = JSON.parse(localStorage.getItem('otros'));
+
+        // Calcular huella de carbono
+        const huellaTransporte = (
+            transporte.km_mensuales * factores.transporte.auto +
+            transporte.viajes_nacionales * factores.transporte.avion_nacional +
+            transporte.viajes_internacionales * factores.transporte.avion_internacional
+        );
+
+        const huellaEnergia = (
+            energia.consumo_electricidad * factores.energia.electricidad +
+            energia.consumo_gas * factores.energia.gas
+        );
+
+        const huellaAlimentacion = (
+            alimentacion.carne_roja * factores.alimentacion.carne_roja +
+            alimentacion.pollo * factores.alimentacion.pollo +
+            alimentacion.pescado * factores.alimentacion.pescado +
+            alimentacion.leche * factores.alimentacion.leche +
+            alimentacion.queso * factores.alimentacion.queso +
+            alimentacion.huevos * factores.alimentacion.huevo
+        );
+
+        const huellaOtros = (
+            otros.consumo_papel * factores.otros.papel
+        );
+
+        const huellaTotal = huellaTransporte + huellaEnergia + huellaAlimentacion + huellaOtros;
+
+        // Mostrar resultados
+        document.getElementById('resultado_transporte').textContent = `Huella de Carbono de Transporte: ${huellaTransporte.toFixed(2)} kg CO2eq/mes`;
+        document.getElementById('resultado_energia').textContent = `Huella de Carbono de Energía: ${huellaEnergia.toFixed(2)} kg CO2eq/mes`;
+        document.getElementById('resultado_alimentacion').textContent = `Huella de Carbono de Alimentación: ${huellaAlimentacion.toFixed(2)} kg CO2eq/mes`;
+        document.getElementById('resultado_otros').textContent = `Huella de Carbono de Otros: ${huellaOtros.toFixed(2)} kg CO2eq/mes`;
+        document.getElementById('resultado_total').textContent = `Huella de Carbono Total: ${huellaTotal.toFixed(2)} kg CO2eq/mes`;
+
+        // Generar sugerencias
+        const sugerencias = [];
+        if (transporte.km_mensuales > 1000) sugerencias.push('Considera usar el transporte público, bicicleta o compartir viajes.');
+        if (transporte.viajes_nacionales > 2) sugerencias.push('Reduce la cantidad de vuelos nacionales.');
+        if (transporte.viajes_internacionales > 1) sugerencias.push('Reduce la cantidad de vuelos internacionales.');
+        if (energia.consumo_electricidad > 500) sugerencias.push('Ahorra energía utilizando bombillas LED y desconectando aparatos no utilizados.');
+        if (energia.consumo_gas > 50) sugerencias.push('Revisa la eficiencia de tu sistema de calefacción.');
+        if (alimentacion.carne_roja > 10) sugerencias.push('Reduce el consumo de carne roja.');
+        if (alimentacion.pollo > 20) sugerencias.push('Reduce el consumo de pollo.');
+        if (alimentacion.pescado > 10) sugerencias.push('Reduce el consumo de pescado.');
+        if (alimentacion.queso > 5) sugerencias.push('Reduce el consumo de queso.');
+        if (alimentacion.leche > 20) sugerencias.push('Reduce el consumo de leche.');
+        if (alimentacion.huevos > 50) sugerencias.push('Reduce el consumo de huevos.');
+        if (otros.consumo_papel > 500) sugerencias.push('Ahorra papel usando impresiones digitales y reciclando.');
+
+        const listaSugerencias = document.getElementById('listaSugerencias');
+        sugerencias.forEach(sugerencia => {
+            const li = document.createElement('li');
+            li.textContent = sugerencia;
+            listaSugerencias.appendChild(li);
+        });
+    </script>
+</body>
+</html>
