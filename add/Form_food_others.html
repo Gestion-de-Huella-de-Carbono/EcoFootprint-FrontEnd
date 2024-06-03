@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Alimentación y Otros - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/add_styles/Forms.css">
+</head>
+<body>
+<h1>Formulario de Alimentación y Otros - EcoFootprint</h1>
+
+<div class="container">
+    <div class="form-section left">
+        <h2>Alimentación</h2>
+        <form id="alimentacion_form">
+            <div class="form-group">
+                <label for="carne_roja">¿Consume carne roja? ¿Cuántos kilos al mes?</label>
+                <input type="number" id="carne_roja" name="carne_roja">
+            </div>
+            <div class="form-group">
+                <label for="pollo">¿Consume pollo? ¿Cuántos kilos al mes?</label>
+                <input type="number" id="pollo" name="pollo">
+            </div>
+            <div class="form-group">
+                <label for="pescado">¿Consume pescado? ¿Cuántos kilos al mes?</label>
+                <input type="number" id="pescado" name="pescado">
+            </div>
+            <div class="form-group">
+                <label for="leche">¿Cuántos litros de leche consume al mes?</label>
+                <input type="number" id="leche" name="leche">
+            </div>
+            <div class="form-group">
+                <label for="queso">¿Cuántos kilos de queso consume al mes?</label>
+                <input type="number" id="queso" name="queso">
+            </div>
+            <div class="form-group">
+                <label for="huevos">¿Consume huevos? ¿Cuántas unidades al mes?</label>
+                <input type="number" id="huevos" name="huevos">
+            </div>
+        </form>
+    </div>
+
+    <div class="form-section right">
+        <h2>Otros</h2>
+        <form id="otros_form">
+            <div class="form-group">
+                <label for="consumo_papel">¿Cuánto papel consumes en un mes (impresiones, hojas de papel, etc.)?</label>
+                <input type="number" id="consumo_papel" name="consumo_papel">
+            </div>
+        </form>
+    </div>
+
+    <div style="clear: both;"></div> <!-- Clearfix para limpiar el float -->
+
+    <div class="button-container">
+        <button type="button" id="enviar_btn">Enviar</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('enviar_btn').addEventListener('click', function() {
+        const alimentacion = {
+            carne_roja: document.getElementById('carne_roja').value,
+            pollo: document.getElementById('pollo').value,
+            pescado: document.getElementById('pescado').value,
+            leche: document.getElementById('leche').value,
+            queso: document.getElementById('queso').value,
+            huevos: document.getElementById('huevos').value
+        };
+        const otros = {
+            consumo_papel: document.getElementById('consumo_papel').value
+        };
+
+        localStorage.setItem('alimentacion', JSON.stringify(alimentacion));
+        localStorage.setItem('otros', JSON.stringify(otros));
+
+        // Recuperar todos los datos de localStorage
+        const personData = JSON.parse(localStorage.getItem('personalData'));
+        const transporte = JSON.parse(localStorage.getItem('transporte'));
+        const energia = JSON.parse(localStorage.getItem('energia'));
+
+        // Calcular la huella de carbono total
+        const totalCarbonFootprint = calculateCarbonFootprint(transporte, energia, alimentacion, otros);
+
+        personData.totalCarbonFootprint = totalCarbonFootprint;
+
+        // Enviar los datos al servidor
+        fetch('http://localhost:8080/api/eco-footprint/persons', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personData)
+        })
+            .then(response => response.json())
+            .then(person => {
+                // Crear el objeto CarbonFootprint y asociarlo con la persona
+                const carbonFootprint = {
+                    transport: transporte.km_mensuales * 0.21 + transporte.viajes_nacionales * 250 + transporte.viajes_internacionales * 1000,
+                    energy: energia.consumo_electricidad * 0.5 + energia.consumo_gas * 2.2,
+                    food: alimentacion.carne_roja * 27 + alimentacion.pollo * 6.9 + alimentacion.pescado * 6.1 + alimentacion.leche * 1.9 + alimentacion.queso * 13.5 + alimentacion.huevos * 0.4,
+                    other: otros.consumo_papel * 1.2,
+                    person: person
+                };
+
+                fetch('http://localhost:8080/api/eco-footprint/carbon-footprints', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(carbonFootprint)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        window.location.href = '../result/Result_suggestions.html';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function calculateCarbonFootprint(transporte, energia, alimentacion, otros) {
+        let total = 0;
+        total += transporte.km_mensuales * 0.21;
+        total += transporte.viajes_nacionales * 250;
+        total += transporte.viajes_internacionales * 1000;
+        total += energia.consumo_electricidad * 0.5;
+        total += energia.consumo_gas * 2.2;
+        total += alimentacion.carne_roja * 27;
+        total += alimentacion.pollo * 6.9;
+        total += alimentacion.pescado * 6.1;
+        total += alimentacion.leche * 1.9;
+        total += alimentacion.queso * 13.5;
+        total += alimentacion.huevos * 0.4;
+        total += otros.consumo_papel * 1.2;
+        return total;
+    }
+</script>
+
+</body>
+</html>

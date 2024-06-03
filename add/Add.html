@@ -38,13 +38,16 @@
 
 <script>
     document.getElementById('agregar_persona_btn').addEventListener('click', function() {
-        // Enviar el formulario
-        document.getElementById('persona_form').submit();
+        const personData = {
+            name: document.getElementById('nombre').value,
+            lastName: document.getElementById('apellido').value,
+            age: document.getElementById('edad').value,
+            city: document.getElementById('ciudad').value,
+        };
 
-        // Redirigir al formulario de transporte y energía
+        localStorage.setItem('personalData', JSON.stringify(personData));
         window.location.href = 'Form_transport_energy.html';
     });
 </script>
-
 </body>
 </html>

@@ -20,25 +20,54 @@ header {
 
 .centered-paragraph {
     width: 50%;
-    margin: 0 auto;
+    margin: 0 auto 20px; /* Añadido margen inferior para separar del nav */
     text-align: center;
 }
 
 nav {
-    margin: 20px 0;
+    margin: 20px auto; /* Centro verticalmente y margen horizontal automático */
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px; /* Ancho máximo del nav */
+}
+
+.nav-section {
+    flex: 1;
+    text-align: left;
+    margin: 0 10px; /* Espacio entre las secciones */
+}
+
+nav h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin-bottom: 5px;
 }
 
 nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #50C878; /* Verde Esmeralda */
-    border: 1px solid #50C878; /* Verde Esmeralda */
+    display: block;
+    width: 100%; /* Ajustar el ancho al 100% */
+    max-width: 200px; /* Ancho máximo de los botones */
     padding: 10px 20px;
+    background-color: #50C878; /* Verde Esmeralda */
+    color: white;
+    text-decoration: none;
+    border: 1px solid #50C878; /* Verde Esmeralda */
     border-radius: 5px;
+    margin-bottom: 5px; /* Espacio entre botones */
     transition: background-color 0.3s, color 0.3s;
 }
 
 nav a:hover {
-    background-color: #50C878; /* Verde Esmeralda */
+    background-color: #509C63; /* Verde más oscuro */
+    border-color: #509C63; /* Verde más oscuro */
     color: white;
 }

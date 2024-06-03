@@ -48,7 +48,6 @@
 
 <script>
     document.getElementById('siguiente_btn').addEventListener('click', function() {
-        // Guardar los datos en localStorage
         const transporte = {
             km_mensuales: document.getElementById('km_mensuales').value,
             viajes_nacionales: document.getElementById('viajes_nacionales').value,
@@ -61,8 +60,6 @@
 
         localStorage.setItem('transporte', JSON.stringify(transporte));
         localStorage.setItem('energia', JSON.stringify(energia));
-
-        // Redirigir a la página de alimentación y otros
         window.location.href = 'Form_food_others.html';
     });
 </script>
