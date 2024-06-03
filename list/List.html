@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Personas - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/list_styles/List.css">
+</head>
+<body>
+<h1>Listado de Personas - EcoFootprint</h1>
+
+<table id="persons_table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+        <th>Ciudad</th>
+        <th>Huella de carbono</th>
+    </tr>
+    </thead>
+    <tbody id="persons_table_body">
+    <!-- Aquí se añadirá el contenido que viene del JavaScript -->
+    </tbody>
+</table>
+
+<nav>
+    <a href="../Index.html">Atras</a>
+</nav>
+
+<script>
+    findAllPersons();
+
+    function findAllPersons() {
+        console.log("Listing all persons:");
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET', 'http://localhost:8080/api/eco-footprint/persons', true);
+
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                var status = xhttp.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    var json = JSON.parse(xhttp.responseText);
+                    createTable(json, "persons_table_body");
+                } else {
+                    console.log("Error");
+                }
+            }
+        };
+        xhttp.send();
+    }
+
+    function createTable(json, tableId) {
+        var tableBody = document.getElementById(tableId);
+
+        // limpia las filas existentes
+        while (tableBody.firstChild) {
+            tableBody.removeChild(tableBody.firstChild);
+        }
+
+        // Añade las nuevas filas
+        json.forEach((person) => {
+            var tr = document.createElement("tr");
+
+            var tdId = document.createElement("td");
+            tdId.textContent = person.id;
+            tr.appendChild(tdId);
+
+            var tdName = document.createElement("td");
+            tdName.textContent = person.name;
+            tr.appendChild(tdName);
+
+            var tdLastName = document.createElement("td");
+            tdLastName.textContent = person.lastName;
+            tr.appendChild(tdLastName);
+
+            var tdAge = document.createElement("td");
+            tdAge.textContent = person.age;
+            tr.appendChild(tdAge);
+
+            var tdCity = document.createElement("td");
+            tdCity.textContent = person.city;
+            tr.appendChild(tdCity);
+
+            var tdCarbonFootprint = document.createElement("td");
+            tdCarbonFootprint.textContent = person.totalCarbonFootprint;
+            tr.appendChild(tdCarbonFootprint);
+
+            tableBody.appendChild(tr);
+        });
+    }
+</script>
+
+</body>
+</html>
+
+
