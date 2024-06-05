@@ -32,7 +32,7 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #D2B48C; /* Marrón Arena */
+    background-color: #ffffff; /* Marrón Arena */
 }
 
 nav {
@@ -54,4 +54,3 @@ nav a:hover {
     background-color: #50C878; /* Verde Esmeralda */
     color: white;
 }
-

@@ -9,35 +9,76 @@ body {
 h1 {
     background-color: #50C878; /* Verde Esmeralda */
     color: white;
-    padding: 10px 0;
+    padding: 20px 0;
     text-align: center;
     margin: 0;
+    font-size: 2em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
+
 table, th, td {
     border: 1px solid #ccc;
 }
+
 th, td {
-    padding: 8px;
+    padding: 12px 15px;
     text-align: left;
 }
 
 th {
     background-color: #8A9A5B; /* Verde Musgo */
     color: white;
+    font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #D2B48C; /* Marrón Arena */
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+input[type="text"],input[type="number"], button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button[type="button"] {
+    background-color: #50C878; /* Verde Esmeralda */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button[type="button"]:hover {
+    background-color: #43a965; /* Verde un poco más oscuro */
 }
 
 nav {
-    margin-top: 30px; /* Aumentado el margen superior para separar los botones de la tabla */
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -56,13 +97,82 @@ nav a:hover {
     color: white;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+.form-section {
+    margin-bottom: 30px;
 }
+
+.form-section h2 {
+    background-color: #8A9A5B; /* Verde Musgo */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 
+.form-group input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #50C878; /* Verde Esmeralda */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45b669; /* Verde más oscuro */
+}
+
+#mensaje_exito, #mensaje_error {
+    display: none;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#mensaje_exito {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+#mensaje_error {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form-group input {
+        width: 100%;
+    }
+}

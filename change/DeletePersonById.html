@@ -2,34 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Actualizar Persona y Huella de Carbono - EcoFootprint</title>
-    <link rel="stylesheet" href="../styles/change_styles/UpdatePerson.css">
+    <title>Eliminar Persona por ID - EcoFootprint</title>
+    <link rel="stylesheet" href="../styles/change_styles/DeletePersonById.css">
 </head>
 <body>
 <header>
-    <h1>Actualizar Persona y Huella de Carbono - EcoFootprint</h1>
+    <h1>Eliminar Persona por ID - EcoFootprint</h1>
 </header>
 
 <div class="container">
     <div id="mensaje_exito" style="display: none;">
-        <p>La persona y su huella de carbono han sido actualizadas correctamente.</p>
+        <p>La persona ha sido eliminada correctamente.</p>
     </div>
     <div class="form-section">
-        <h2>Actualizar Persona</h2>
-        <form id="actualizar_persona_form">
+        <h2>Eliminar Persona</h2>
+        <form id="eliminar_persona_form">
             <div class="form-group">
-                <label for="id_persona">Ingrese el ID de la persona a actualizar:</label>
+                <label for="id_persona">Ingrese el ID de la persona a eliminar:</label>
                 <input type="number" id="id_persona" name="id_persona" required>
             </div>
             <div class="form-group">
-                <button type="button" id="buscar_btn">Buscar Persona</button>
+                <button type="button" id="buscar_persona_btn">Buscar Persona</button>
             </div>
         </form>
     </div>
 
     <div id="resultados" style="display: none;">
-        <h2>Persona a Actualizar</h2>
-        <table id="persona_actualizar_table">
+        <h2>Detalles de la Persona</h2>
+        <table id="persona_detalle_table">
             <thead>
             <tr>
                 <th>Id</th>
@@ -37,39 +37,13 @@
                 <th>Apellido</th>
                 <th>Edad</th>
                 <th>Ciudad</th>
-                <th>Huella de carbono (Total)</th>
+                <th>Acciones</th>
             </tr>
             </thead>
-            <tbody id="persona_actualizar_body">
+            <tbody id="persona_detalle_body">
             <!-- Aquí se añadirá el contenido que viene del JavaScript -->
             </tbody>
         </table>
-    </div>
-
-    <div id="resultados2" style="display: none;">
-        <h2>Actualizar Huella de Carbono</h2>
-        <form id="form_huella_datos">
-            <div class="form-group">
-                <label for="transport">Transporte:</label>
-                <input type="number" id="transport" name="transport" required>
-            </div>
-            <div class="form-group">
-                <label for="energy">Energía:</label>
-                <input type="number" id="energy" name="energy" required>
-            </div>
-            <div class="form-group">
-                <label for="food">Alimentos:</label>
-                <input type="number" id="food" name="food" required>
-            </div>
-            <div class="form-group">
-                <label for="other">Otros:</label>
-                <input type="number" id="other" name="other" required>
-            </div>
-
-            <div class="button-container">
-                <button type="button" id="actualizar_huella_btn">Actualizar Huella</button>
-            </div>
-        </form>
     </div>
 </div>
 
@@ -78,7 +52,7 @@
 </nav>
 
 <script>
-    document.getElementById('buscar_btn').addEventListener('click', function() {
+    document.getElementById('buscar_persona_btn').addEventListener('click', function() {
         var idPersona = document.getElementById('id_persona').value;
 
         console.log("Buscando persona con ID:", idPersona);
@@ -92,9 +66,12 @@
                 if (status === 200) {
                     var persona = JSON.parse(xhttp.responseText);
                     mostrarPersona(persona);
+                } else if (status === 404) {
+                    console.log("Persona no encontrada:", idPersona);
+                    alert("La persona con ID " + idPersona + " no fue encontrada.");
                 } else {
                     console.log("Error al buscar persona:", status);
-                    limpiarDatosPersona();
+                    alert("Ocurrió un error al intentar buscar la persona.");
                 }
             }
         };
@@ -103,101 +80,54 @@
 
     function mostrarPersona(persona) {
         document.getElementById('resultados').style.display = 'block';
-        document.getElementById('resultados2').style.display = 'block'; // Mostrar resultados2 al mostrar resultados
 
-        var tablaBody = document.getElementById('persona_actualizar_body');
+        var tablaBody = document.getElementById('persona_detalle_body');
         tablaBody.innerHTML = '';
 
         var fila = document.createElement('tr');
 
-        var totalHuella = calcularTotalHuella(persona.totalCarbonFootprint);
-
         fila.innerHTML = `
         <td>${persona.id}</td>
-        <td><input type="text" id="nombre" name="nombre" value="${persona.name}" required></td>
-        <td><input type="text" id="apellido" name="apellido" value="${persona.lastName}" required></td>
-        <td><input type="number" id="edad" name="edad" value="${persona.age}" required></td>
-        <td><input type="text" id="ciudad" name="ciudad" value="${persona.city}" required></td>
-        <td>${totalHuella}</td>
-        <td><button type="button" id="actualizar_persona_btn">Actualizar Persona</button></td>
+        <td>${persona.name}</td>
+        <td>${persona.lastName}</td>
+        <td>${persona.age}</td>
+        <td>${persona.city}</td>
+        <td><button type="button" id="eliminar_persona_btn">Eliminar Persona</button></td>
     `;
 
         tablaBody.appendChild(fila);
 
-        // Asignar el ID de persona para actualizar huella de carbono
-        personaId = persona.id;
-
-        document.getElementById('actualizar_persona_btn').addEventListener('click', function() {
-            actualizarPersona(persona.id);
+        // Asignar el ID de persona para eliminar
+        document.getElementById('eliminar_persona_btn').addEventListener('click', function() {
+            eliminarPersona(persona.id);
         });
-
-        // Mostrar form para actualizar huella de carbono
-        document.getElementById('resultados2').style.display = 'block';
-
-        // Llenar formulario para actualizar huella de carbono
-        document.getElementById('transport').value = persona.totalCarbonFootprint.transport;
-        document.getElementById('energy').value = persona.totalCarbonFootprint.energy;
-        document.getElementById('food').value = persona.totalCarbonFootprint.food;
-        document.getElementById('other').value = persona.totalCarbonFootprint.other;
     }
 
-    function limpiarDatosPersona() {
-        document.getElementById('resultados').style.display = 'none';
-        document.getElementById('resultados2').style.display = 'none';
+    function eliminarPersona(idPersona) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('DELETE', 'http://localhost:8080/api/eco-footprint/persons/' + idPersona, true);
 
-        document.getElementById('persona_actualizar_body').innerHTML = '';
-
-        document.getElementById('id_persona').value = '';
-        document.getElementById('nombre').value = '';
-        document.getElementById('apellido').value = '';
-        document.getElementById('edad').value = '';
-        document.getElementById('ciudad').value = '';
-    }
-
-    function actualizarPersona(idPersona) {
-        var personaActualizada = {
-            id: idPersona,
-            name: document.getElementById('nombre').value,
-            lastName: document.getElementById('apellido').value,
-            age: parseInt(document.getElementById('edad').value),
-            city: document.getElementById('ciudad').value
-        };
-
-        console.log("Actualizando persona:", personaActualizada);
-
-        var xhttpPersona = new XMLHttpRequest();
-        xhttpPersona.open('PUT', 'http://localhost:8080/api/eco-footprint/persons/' + personaActualizada.id, true);
-        xhttpPersona.setRequestHeader('Content-Type', 'application/json');
-
-        xhttpPersona.onreadystatechange = function() {
-            if (xhttpPersona.readyState === XMLHttpRequest.DONE) {
-                var status = xhttpPersona.status;
-                if (status === 200) {
-                    var personaActualizada = JSON.parse(xhttpPersona.responseText);
-                    actualizarFilaTabla(personaActualizada);
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                var status = xhttp.status;
+                if (status === 204) {
                     mostrarMensajeExito();
                     limpiarDatosPersona();
+                } else if (status === 404) {
+                    console.log("Persona no encontrada:", idPersona);
+                    alert("La persona con ID " + idPersona + " no fue encontrada.");
                 } else {
-                    console.log("Error al actualizar persona:", status);
+                    console.log("Error al eliminar persona:", status);
+                    alert("Ocurrió un error al intentar eliminar la persona.");
                 }
             }
         };
-        xhttpPersona.send(JSON.stringify(personaActualizada));
+        xhttp.send();
     }
 
-    function actualizarFilaTabla(persona) {
-        var fila = document.querySelector('#persona_actualizar_body tr');
-        var totalHuella = calcularTotalHuella(persona.totalCarbonFootprint);
-
-        fila.innerHTML = `
-        <td>${persona.id}</td>
-        <td><input type="text" id="nombre" name="nombre" value="${persona.name}" required></td>
-        <td><input type="text" id="apellido" name="apellido" value="${persona.lastName}" required></td>
-        <td><input type="number" id="edad" name="edad" value="${persona.age}" required></td>
-        <td><input type="text" id="ciudad" name="ciudad" value="${persona.city}" required></td>
-        <td>${totalHuella}</td>
-        <td><button type="button" id="actualizar_persona_btn">Actualizar Persona</button></td>
-    `;
+    function limpiarDatosPersona() {
+        document.getElementById('id_persona').value = '';
+        document.getElementById('resultados').style.display = 'none';
     }
 
     function mostrarMensajeExito() {
@@ -207,68 +137,7 @@
             mensajeExito.style.display = 'none';
         }, 5000);
     }
-
-    // JavaScript para Actualizar Huella de Carbono
-    var personaId = null; // Variable global para almacenar el ID de la persona
-
-    // Obtener el ID de la persona desde la URL
-    var urlParams = new URLSearchParams(window.location.search);
-    personaId = urlParams.get('id');
-
-    document.getElementById('actualizar_huella_btn').addEventListener('click', function() {
-        var transport = parseFloat(document.getElementById('transport').value);
-        var energy = parseFloat(document.getElementById('energy').value);
-        var food = parseFloat(document.getElementById('food').value);
-        var other = parseFloat(document.getElementById('other').value);
-
-        actualizarHuellaCarbono({ transport, energy, food, other });
-    });
-
-    function actualizarHuellaCarbono(huella) {
-        console.log("Actualizando huella de carbono:", huella);
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.open('PUT', 'http://localhost:8080/api/eco-footprint/carbon-footprints/' + personaId, true);
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState === XMLHttpRequest.DONE) {
-                var status = xhttp.status;
-                if (status === 200) {
-                    var huellaActualizada = JSON.parse(xhttp.responseText);
-                    actualizarFilaTablaHuella(huellaActualizada);
-                    limpiarDatosHuella();
-                } else {
-                    console.log("Error al actualizar huella de carbono:", status);
-                }
-            }
-        };
-
-        xhttp.send(JSON.stringify(huella));
-    }
-
-    function limpiarDatosHuella() {
-        document.getElementById('transport').value = '';
-        document.getElementById('energy').value = '';
-        document.getElementById('food').value = '';
-        document.getElementById('other').value = '';
-    }
-
-    function actualizarFilaTablaHuella(huella) {
-        var fila = document.querySelector('#persona_actualizar_body tr');
-        var totalHuella = calcularTotalHuella(huella);
-
-        var celdas = fila.getElementsByTagName('td');
-        celdas[5].textContent = totalHuella;
-    }
-
-    function calcularTotalHuella(huella) {
-        var total = huella.transport + huella.energy + huella.food + huella.other;
-        return total;
-    }
-
 </script>
 
 </body>
 </html>
-

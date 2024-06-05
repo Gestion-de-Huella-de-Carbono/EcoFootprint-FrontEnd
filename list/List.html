@@ -84,7 +84,7 @@
             tr.appendChild(tdCity);
 
             var tdCarbonFootprint = document.createElement("td");
-            tdCarbonFootprint.textContent = person.totalCarbonFootprint;
+            tdCarbonFootprint.textContent = person.totalCarbonFootprint.toFixed(2); // Mostrar dos cifras decimales
             tr.appendChild(tdCarbonFootprint);
 
             tableBody.appendChild(tr);

@@ -1,3 +1,4 @@
+/* Estilos globales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -19,9 +20,11 @@ table {
     margin-top: 20px;
     border-collapse: collapse;
 }
+
 table, th, td {
     border: 1px solid #ccc;
 }
+
 th, td {
     padding: 8px;
     text-align: left;
@@ -37,7 +40,7 @@ tr:nth-child(even) {
 }
 
 nav {
-    margin-top: 30px; /* Aumentado el margen superior para separar los botones de la tabla */
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -58,11 +61,92 @@ nav a:hover {
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .form-group {
     margin-bottom: 15px;
 }
 
+.form-section {
+    margin-bottom: 20px;
+}
 
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="number"],
+.form-group button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group button {
+    background-color: #50C878; /* Verde Esmeralda */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #4CAF50; /* Verde más oscuro */
+}
+
+#resultados {
+    display: none;
+}
+
+#mensaje_exito {
+    display: none;
+    background-color: #4CAF50; /* Verde más oscuro */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+/* Estilos para la tabla de resultados */
+#persona_detalle_table {
+    margin-top: 20px;
+}
+
+#persona_detalle_table th,
+#persona_detalle_table td {
+    padding: 10px;
+}
+
+#persona_detalle_table th {
+    background-color: #8A9A5B; /* Verde Musgo */
+    color: white;
+}
+
+#persona_detalle_table tbody tr:nth-child(even) {
+    background-color: #D2B48C; /* Marrón Arena */
+}
+
+/* Estilos para el botón de eliminar persona */
+#eliminar_persona_btn {
+    background-color: #fa674b; /* Rojo Tomate */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#eliminar_persona_btn:hover {
+    background-color: #ff3121; /* Rojo más oscuro */
+}

@@ -92,10 +92,10 @@
         // Generar sugerencias
         const sugerencias = [];
         if (transporte.km_mensuales > 1000) sugerencias.push('Considera usar el transporte público, bicicleta o compartir viajes.');
-        if (transporte.viajes_nacionales > 2) sugerencias.push('Reduce la cantidad de vuelos nacionales.');
-        if (transporte.viajes_internacionales > 1) sugerencias.push('Reduce la cantidad de vuelos internacionales.');
+        if (transporte.viajes_nacionales > 4) sugerencias.push('Intenta reducir la cantidad de vuelos nacionales.');
+        if (transporte.viajes_internacionales > 2) sugerencias.push('Reduce la cantidad de vuelos internacionales.');
         if (energia.consumo_electricidad > 500) sugerencias.push('Ahorra energía utilizando bombillas LED y desconectando aparatos no utilizados.');
-        if (energia.consumo_gas > 50) sugerencias.push('Revisa la eficiencia de tu sistema de calefacción.');
+        if (energia.consumo_gas > 50) sugerencias.push('Revisa la eficiencia de tu estufa y sistema de calefacción.');
         if (alimentacion.carne_roja > 10) sugerencias.push('Reduce el consumo de carne roja.');
         if (alimentacion.pollo > 20) sugerencias.push('Reduce el consumo de pollo.');
         if (alimentacion.pescado > 10) sugerencias.push('Reduce el consumo de pescado.');

@@ -1,3 +1,4 @@
+/* Reset y estilos generales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,27 +7,70 @@ body {
     color: #333;
 }
 
+.container {
+    max-width: 800px;
+    margin: 20px auto; /* Centralizar y dar espacio */
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Encabezado */
 h1 {
     background-color: #50C878; /* Verde Esmeralda */
     color: white;
     padding: 10px 0;
     text-align: center;
-    margin: 0;
+    margin: 0 0 20px; /* Separación inferior */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
+/* Formularios */
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button[type="button"] {
+    background-color: #50C878; /* Verde Esmeralda */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button[type="button"]:hover {
+    background-color: #43a965; /* Verde un poco más oscuro */
+}
+
+/* Tabla */
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
-}
-
 th, td {
-    border: 1px solid #50C878; /* Verde Esmeralda */
-    padding: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: left;
 }
 
@@ -35,11 +79,11 @@ th {
     color: white;
 }
 
-tr:nth-child(even) {
-    background-color: #D2B48C; /* Marrón Arena */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo gris claro */
 }
 
-
+/* Navegación */
 nav {
     margin-top: 30px; /* Aumentado el margen superior para separar los botones de la tabla */
     text-align: center;
@@ -59,14 +103,3 @@ nav a:hover {
     background-color: #50C878; /* Verde Esmeralda */
     color: white;
 }
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-.form-group {
-    margin-bottom: 15px;
-}
-
-

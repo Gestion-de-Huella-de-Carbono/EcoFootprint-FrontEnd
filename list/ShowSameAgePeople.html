@@ -86,6 +86,9 @@
             }
         };
         xhttp.send();
+
+        // Limpiar el campo de entrada
+        document.getElementById('edad').value = '';
     });
 
     document.getElementById('filtrar_rango_btn').addEventListener('click', function() {
@@ -144,7 +147,7 @@
             tr.appendChild(tdCity);
 
             var tdCarbonFootprint = document.createElement("td");
-            tdCarbonFootprint.textContent = person.totalCarbonFootprint;
+            tdCarbonFootprint.textContent = person.totalCarbonFootprint.toFixed(2); // Mostrar dos cifras decimales
             tr.appendChild(tdCarbonFootprint);
 
             tableBody.appendChild(tr);
